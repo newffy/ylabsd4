@@ -57,7 +57,7 @@ const currbalance = async () => {
   sttcontract.methods.balanceOf(addr).call().then(balance => {
           Swal.fire(
         'Success!',
-        'Your balance is ' + web3.utils.fromWei(balance) + ' CMWTP',
+        'Your balance is ' + web3.utils.fromWei(balance) + ' CMWTP, this is' + 0.05 * web3.utils.fromWei(balance) + ' ether',
         'info'
       )
 
