@@ -1,7 +1,7 @@
 let web3 = new web3js.myweb3(window.ethereum);
 let addr;
 
-const sttaddr = "0xdd23f59be25ab34d4d7f435fe1a36fa2cab4dde5";
+const sttaddr = "0xe8F0749f56E44F95D20942410FF365eBDAA187bE";
 const sttabi = [
   {
     "inputs": [],
@@ -22,7 +22,7 @@ const sttabi = [
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "balance",
         "type": "uint256"
       }
     ],
@@ -35,6 +35,59 @@ let sttcontract = new web3.eth.Contract(sttabi, sttaddr);
 
 
 //***************** our smart-contract integration *****************/
+
+const currbalance = async () => {
+  await loadweb3();
+  const chainId = await web3.eth.getChainId();
+  if (addr == undefined) {
+    Swal.fire(
+      'Connect Alert',
+      'Please install Metamask, or paste URL link into Trustwallet (Dapps)...',
+      'error'
+    )
+  }
+  if (chainId !== 4) { //Change for LIVE
+    Swal.fire(
+      'Connect Alert',
+      'Please Connect on Rinkeby', //Change for LIVE
+      'error'
+    )
+  }
+
+  sttcontract.methods.balanceOf(addr).call().then(balance => {
+          Swal.fire(
+        'Success!',
+        'Your balance is ' + web3.utils.fromWei(balance) + ' CMWTP',
+        'info'
+      )
+
+    //console.log(web3.utils.fromWei(balance))
+  });
+
+  // const result = await (sttcontract.methods.balanceOf(addr).call().then(function (error, result) {
+  //     // Swal.fire(
+  //     //   'Success!',
+  //     //   'Thank you for your purchase!',
+  //     //   'info'
+  //     // )
+  //   }, function (e, processedContract) {
+  //     Swal.fire(
+  //       'Error!',
+  //       'Transaction rejected!',
+  //       'error'
+  //     )
+  //   }));
+  console.log(addr)
+  //console.log(result)
+
+  // Swal.fire(
+  //   'Balance',
+  //   'Your balance is ' + result,
+  //   'info'
+  // )
+
+
+}
 
 const buystt = async () => {
   await loadweb3();
@@ -75,7 +128,7 @@ const buystt = async () => {
   else {
     Swal.fire(
       'Buy Alert',
-      'Buy as low as 0.01 BNB.',
+      'Buy as low as 0.01 ether.',
       'error'
     )
   }
@@ -115,8 +168,8 @@ function addToWallet() {
       params: {
         'type': 'ERC20',
         'options': {
-          'address': '0xdd23f59be25ab34d4d7f435fe1a36fa2cab4dde5',
-          'symbol': 'MTWP',
+          'address': '0xe8F0749f56E44F95D20942410FF365eBDAA187bE',
+          'symbol': 'CMVTWP',
           'decimals': '18'
         },
       },
@@ -141,7 +194,7 @@ function addToWallet() {
 //***************** some beauty jewelry  *****************/
 
 // Set the date we're counting down to
-var countDownDate = new Date("July 30, 2022 15:37:25").getTime();
+var countDownDate = new Date("July 30, 2023 15:37:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function () {
